@@ -1,0 +1,13 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for car in cars %}
+<img src="{{ car.image }}">
+<h1>{{car.title}}</h1>
+{% endfor %}
+</body>
+</html>
