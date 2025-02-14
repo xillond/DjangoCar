@@ -25,6 +25,7 @@ class Color(models.Model):
 
 class Car(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    description = models.TextField()
     title = models.CharField(max_length=123)
     model = models.CharField(max_length=223)
     year = models.PositiveSmallIntegerField()
