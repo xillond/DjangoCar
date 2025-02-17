@@ -3,50 +3,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ car.title }}</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            min-height: 100vh;
         }
         .container {
             margin-top: 50px;
         }
         .car-image {
             width: 100%;
-            max-height: 400px;
+            max-height: 500px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .car-image:hover {
+            transform: scale(1.02);
         }
         .car-details {
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            color: #333;
+        }
+        h1 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        h3 {
+            font-weight: 500;
+            margin: 10px 0;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .btn-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn-back:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: scale(1.05);
+            color: white;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
             <img src="{{ car.image.url }}" alt="{{ car.title }}" class="car-image">
         </div>
-        <div class="col-md-6 car-details">
+        <div class="col-lg-6 car-details">
             <h1>{{ car.title }} ({{ car.model }})</h1>
-            <h3>Год выпуска: {{ car.year }}</h3>
-            <h3>Двигатель: {{ car.engine_capacity }}L</h3>
-            <h3>Пробег: {{ car.odometer }} км</h3>
-            <h3>Цвет: {{ car.color }}</h3>
-            <h3>Категория: {{ car.category }}</h3>
+            <h3>🚗 Год выпуска: <strong>{{ car.year }}</strong></h3>
+            <h3>⚙️ Двигатель: <strong>{{ car.engine_capacity }}L</strong></h3>
+            <h3>🛣️ Пробег: <strong>{{ car.odometer }} км</strong></h3>
+            <h3>🎨 Цвет: <strong>{{ car.color }}</strong></h3>
+            <h3>📦 Категория: <strong>{{ car.category }}</strong></h3>
             <p class="mt-3">{{ car.description }}</p>
-            <a href="{% url 'home' %}" class="btn btn-primary mt-3">Назад</a>
+            <a href="{% url 'home' %}" class="btn btn-back mt-4">⬅️ Назад</a>
         </div>
     </div>
 </div>
