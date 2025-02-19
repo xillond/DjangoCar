@@ -18,96 +18,101 @@
             font-family: 'Roboto', sans-serif;
             background: linear-gradient(to right, #667eea, #764ba2);
             color: #fff;
+            min-height: 100vh;
         }
-        .container {
-            margin-top: 50px;
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 15px 15px;
         }
+        .header h2 {
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        /* Поиск */
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+        .search-box input {
+            width: 200px;
+            padding: 8px 12px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        /* Кнопка "Добавить машину" */
+        .btn-add {
+            padding: 8px 15px;
+            background: #ff9800;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: 25px;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .btn-add:hover {
+            background: #e68900;
+            transform: scale(1.05);
+        }
+        /* Карточки машин */
         .card {
             border-radius: 15px;
             overflow: hidden;
             background-color: #fff;
             color: #333;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         .card img {
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
             height: 220px;
             object-fit: cover;
-            filter: brightness(90%);
-            transition: filter 0.3s ease;
+            transition: filter 0.3s;
         }
         .card img:hover {
-            filter: brightness(100%);
-        }
-        .btn-add {
-            display: block;
-            margin: 30px auto;
-            width: 250px;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            font-size: 18px;
-            font-weight: 700;
-            border: none;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-        .btn-add:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            transform: scale(1.05);
-            color: #fff;
+            filter: brightness(95%);
         }
         .footer {
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
             padding: 20px;
-            background-color: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.8);
             color: white;
-        }
-        h1 {
-            font-weight: 700;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-        }
-        .card-title {
-            font-weight: 600;
-            font-size: 1.25rem;
-        }
-        .card-text {
-            font-size: 0.95rem;
-            color: #555;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            transition: transform 0.3s;
-        }
-        .btn-primary:hover {
-            transform: scale(1.05);
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
         }
     </style>
 </head>
 <body>
 
-<a href="{% url 'add_car' %}" class="btn btn-add">
-    ➕ Добавить машину
-</a>
+<!-- Header -->
+<div class="header">
+    <h2>🚘 Автомобили</h2>
+    <div class="search-box">
+        <form method="GET" action=".">
+            <input type="search" name="search" placeholder="🔍 Поиск...">
+        </form>
+        <a href="{% url 'add_car_django' %}" class="btn btn-add ms-3">➕ Добавить</a>
+    </div>
+</div>
 
-<div class="container">
-    <h1 class="text-center">Автомобили</h1>
+<div class="container mt-4">
     <div class="row">
         {% for car in cars %}
         <div class="col-md-4 mb-4">
             <div class="card shadow-lg">
                 <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.title }}">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="card-title">{{ car.title }}</h5>
                     <p class="card-text">{{ car.description|truncatechars:100 }}</p>
                     <a href="{% url 'details' car.id %}" class="btn btn-primary w-100 mt-2">Подробнее</a>
@@ -115,10 +120,11 @@
             </div>
         </div>
         {% empty %}
-        <p class="text-center mt-4">Автомобили не найдены</p>
+        <p class="text-center mt-4">❌ Автомобили не найдены</p>
         {% endfor %}
     </div>
 </div>
+
 
 <div class="footer">
     © 2025 Автосалон. Все права защищены.

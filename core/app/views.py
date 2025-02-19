@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect
 from .models import Car, Category, Color
+from .forms import CarCreateForm
+from django.db.models import Q
 
 def home_page(request):
     cars = Car.objects.all()
+    if 'search' in request.GET:
+        search = request.GET['search']
+        cars = Car.objects.filter(Q(title__icontains=search) | Q(description__icontains=search))
+
     return render(request, 'app/index.html', {'cars': cars})
 
 
@@ -35,4 +41,16 @@ def add_car(request):
         return redirect('home')
 
     return render(request, 'app/add_car.html', {'colors': colors, 'categories': categories})
+
+
+def add_car_django(request):
+
+    if request.method == 'POST':
+        form = CarCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    form = CarCreateForm()
+    return render(request, 'app/add_car_django.html', {'form':form})
 
