@@ -53,21 +53,34 @@
             font-size: 1.1rem;
             line-height: 1.6;
         }
+        .d-flex {
+    display: flex;
+    justify-content: center; /* Центрирует кнопки */
+    flex-wrap: wrap; /* Если экран маленький, кнопки не ломаются, а переносятся */
+        }
+
+        .btn {
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 12px 24px;
+            transition: all 0.3s ease-in-out;
+        }
+
         .btn-back {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-radius: 50px;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
             text-decoration: none;
+            border-radius: 50px;
         }
-        .btn-back:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+
+        .btn-outline-primary, .btn-outline-danger {
+            border-width: 2px;
+            padding: 12px 24px;
+        }
+
+        .btn:hover {
             transform: scale(1.05);
-            color: white;
         }
     </style>
 </head>
@@ -86,10 +99,17 @@
             <h3>🎨 Цвет: <strong>{{ car.color }}</strong></h3>
             <h3>📦 Категория: <strong>{{ car.category }}</strong></h3>
             <p class="mt-3">{{ car.description }}</p>
-            <a href="{% url 'home' %}" class="btn btn-back mt-4">⬅️ Назад</a>
+             <div class="d-flex gap-3 mt-4">
+                <a href="{% url 'home' %}" class="btn btn-back">⬅️ Назад</a>
+                <a href="{% url 'edit_car' car.id %}" class="btn btn-outline-primary">✏️ Edit</a>
+                <a href="{% url 'confirm_delete' car.id %}" class="btn btn-outline-danger">🗑️ Delete</a>
+            </div>
         </div>
     </div>
 </div>
+
+
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Car, Category, Color
-from .forms import CarCreateForm
+from .forms import CarCreateForm, CarEditForm
 from django.db.models import Q
 
 def home_page(request):
@@ -53,4 +53,30 @@ def add_car_django(request):
 
     form = CarCreateForm()
     return render(request, 'app/add_car_django.html', {'form':form})
+
+
+def edit_car_django(request, pk):
+
+    car = Car.objects.get(id=pk)
+    if request.method == 'POST':
+        form = CarEditForm(request.POST, request.FILES, instance=car)
+        if form.is_valid():
+            print('save')
+            form.save()
+            return redirect('details', car.id)
+        print('not valid')
+
+    form = CarEditForm(instance=car)
+
+    return render(request, 'app/edit_car.html', {'car': car, 'form': form})
+
+
+def confirm_delete_page(request, pk):
+    car = Car.objects.get(id=pk)
+    return render(request, 'app/delete_page.html', {'car': car})
+
+def delete_car(request, pk):
+    car = Car.objects.get(id=pk)
+    car.delete()
+    return redirect('home')
 
